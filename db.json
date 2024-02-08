@@ -3,15 +3,13 @@
         {
             "id": 1,
             "title": "Apprendre Angular",
-            "status": "Done",
-            "deadline": "12/11/2000",
+            "status": false,
             "createdDate": "11/11/2000"
         },
         {
             "id": 2,
             "title": "Apprendre Angular",
-            "status": "Done",
-            "deadline": "12/11/2000",
+            "status": false,
             "createdDate": "11/11/2000"
         }
     ]
