@@ -13,4 +13,8 @@ export class TaskService {
   createTask(data: Task) {
     return this.http.post('http://localhost:3000/todos', data);
   }
+
+  deleteTask(id: string) {
+    return this.http.delete('http://localhost:3000/todos/' + id);
+  }
 }

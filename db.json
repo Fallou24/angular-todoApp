@@ -1,28 +1,10 @@
 {
   "todos": [
     {
-      "id": 1,
-      "title": "Apprendre Angular",
-      "status": false,
-      "createdDate": "11/11/2000"
-    },
-    {
-      "id": 2,
+      "id": "2",
       "title": "Apprendre Angular",
       "status": true,
       "createdDate": "11/11/2000"
-    },
-    {
-      "id": "1707395830206",
-      "title": "hello",
-      "status": false,
-      "createdAt": "2024-02-08T12:37:10.206Z"
-    },
-    {
-      "id": "1707395930619",
-      "title": "cc",
-      "status": false,
-      "createdAt": "2024-02-08T12:38:50.619Z"
     }
   ]
 }

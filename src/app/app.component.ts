@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
-    this.task$ = this.taskService.getTasks()
+    this.task$ = this.taskService.getTasks();
     this.taskControl = this.formBuilder.control('', Validators.required);
   }
   onSubmitForm(e: Event) {
@@ -34,5 +34,14 @@ export class AppComponent implements OnInit {
       (err: any) => console.log('Erreur ', err)
     );
     this.taskControl.reset();
+    window.location.reload()
+  }
+
+  onDeleteTask(id: string) {
+    this.taskService.deleteTask(id).subscribe(
+      (res) => console.log('Reponse, ' + res),
+      (err) => console.log('Erreur ' + err)
+    );
+    window.location.reload()
   }
 }
