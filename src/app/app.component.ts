@@ -12,6 +12,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 export class AppComponent implements OnInit {
   task$!: Observable<any>;
   taskControl!: FormControl;
+  statusValue!: boolean;
   constructor(
     private taskService: TaskService,
     private formBuilder: FormBuilder
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
       (err: any) => console.log('Erreur ', err)
     );
     this.taskControl.reset();
-    window.location.reload()
+    window.location.reload();
   }
 
   onDeleteTask(id: string) {
@@ -42,6 +43,14 @@ export class AppComponent implements OnInit {
       (res) => console.log('Reponse, ' + res),
       (err) => console.log('Erreur ' + err)
     );
-    window.location.reload()
+    window.location.reload();
+  }
+
+  onChangeStatus(data: { id: string; status: boolean }) {
+    this.taskService.updatedTaskStatus(data).subscribe(
+      (res) => console.log('Reponse, ' + res),
+      (err) => console.log('Erreur ' + err)
+    );
+    window.location.reload();
   }
 }

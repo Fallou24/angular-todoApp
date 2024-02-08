@@ -17,4 +17,9 @@ export class TaskService {
   deleteTask(id: string) {
     return this.http.delete('http://localhost:3000/todos/' + id);
   }
+  updatedTaskStatus(taskInfo: { id: string; status: boolean }) {
+    return this.http.patch('http://localhost:3000/todos/' + taskInfo.id, {
+      status: !taskInfo.status,
+    });
+  }
 }

@@ -1,14 +1,18 @@
 <div class="flex justify-center items-center min-h-screen">
   <div class="bg-white shadow p-4 rounded-md w-1/2 text-center">
     <h1 class="text-2xl font-bold mb-2">Todo App</h1>
-    <form class="flex gap-4 mb-3"  (submit)="onSubmitForm($event)">
+    <form class="flex gap-4 mb-3" (submit)="onSubmitForm($event)">
       <input
         type="text"
         placeholder="Ajouter une tache"
         [formControl]="taskControl"
         class="flex-grow border bg-[#F8FAFC] border-gray-200 rounded-md outline-none p-2"
       />
-      <button type="submit" [disabled]="taskControl.invalid" class="bg-[#0E7490] px-4 text-white rounded-md">
+      <button
+        type="submit"
+        [disabled]="taskControl.invalid"
+        class="bg-[#0E7490] px-4 text-white rounded-md"
+      >
         Ajouter
       </button>
     </form>
@@ -17,14 +21,25 @@
       *ngFor="let task of task$ | async"
     >
       <div class="flex gap-2 items-center">
-        <input type="checkbox" name="" id="task" [checked]="task.status" />
-        <label for="task" [ngClass]="{ completed: task.status }">{{
+        <input
+          type="checkbox"
+          name=""
+          [id]="task.id"
+          [checked]="task.status"
+          (change)="onChangeStatus({ id: task.id, status: task.status })"
+        />
+        <label [for]="task.id" [ngClass]="{ completed: task.status }">{{
           task.title
         }}</label>
       </div>
       <div class="flex gap-2">
         <button class="bg-green-700 p-1 text-white rounded">Editer</button>
-        <button class="bg-red-700 p-1 text-white rounded" (click)="onDeleteTask(task.id)">Supprimer</button>
+        <button
+          class="bg-red-700 p-1 text-white rounded"
+          (click)="onDeleteTask(task.id)"
+        >
+          Supprimer
+        </button>
       </div>
     </div>
   </div>
