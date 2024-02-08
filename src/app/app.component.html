@@ -1,13 +1,14 @@
 <div class="flex justify-center items-center min-h-screen">
   <div class="bg-white shadow p-4 rounded-md w-1/2 text-center">
     <h1 class="text-2xl font-bold mb-2">Todo App</h1>
-    <form class="flex gap-4 mb-3">
+    <form class="flex gap-4 mb-3"  (submit)="onSubmitForm($event)">
       <input
         type="text"
         placeholder="Ajouter une tache"
+        [formControl]="taskControl"
         class="flex-grow border bg-[#F8FAFC] border-gray-200 rounded-md outline-none p-2"
       />
-      <button type="submit" class="bg-[#0E7490] px-4 text-white rounded-md">
+      <button type="submit" [disabled]="taskControl.invalid" class="bg-[#0E7490] px-4 text-white rounded-md">
         Ajouter
       </button>
     </form>
