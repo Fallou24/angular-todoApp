@@ -11,10 +11,15 @@
         Ajouter
       </button>
     </form>
-    <div class="flex justify-between items-center mb-2">
+    <div
+      class="flex justify-between items-center mb-2"
+      *ngFor="let task of task$ | async"
+    >
       <div class="flex gap-2 items-center">
-        <input type="checkbox" name="" id="task" />
-        <label for="task">Apprendre le javascript</label>
+        <input type="checkbox" name="" id="task" [checked]="task.status" />
+        <label for="task" [ngClass]="{ completed: task.status }">{{
+          task.title
+        }}</label>
       </div>
       <div class="flex gap-2">
         <button class="bg-green-700 p-1 text-white rounded">Editer</button>
