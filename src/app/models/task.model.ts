@@ -3,4 +3,5 @@ export class Task {
   title!: string;
   status!: boolean;
   createdAt!: Date;
+  deadline!: Date;
 }

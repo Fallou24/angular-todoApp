@@ -6,3 +6,8 @@
 .completed{
     text-decoration: line-through;
 }
+
+.expired{
+    text-decoration: line-through;
+    text-decoration-color: red;
+}

@@ -22,9 +22,10 @@ export class TaskService {
       status: !taskInfo.status,
     });
   }
-  updateTaskTitle(taskInfo: { id: string; title: string }) {
+  updateTaskTitle(taskInfo: { id: string; title: string; deadline: Date }) {
     return this.http.patch('http://localhost:3000/todos/' + taskInfo.id, {
       title: taskInfo.title,
+      deadline: taskInfo.deadline,
     });
   }
 }
