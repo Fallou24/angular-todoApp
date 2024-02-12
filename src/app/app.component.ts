@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from './services/task.service';
-import { Observable, map } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 import { Task } from './models/task.model';
 import {
   FormBuilder,
@@ -20,16 +20,22 @@ export class AppComponent implements OnInit {
   statusValue!: boolean;
   editTask = false;
   taskId!: string;
+  listAllTask = true;
+  completedTask$!: Observable<any>;
   constructor(
     private taskService: TaskService,
     private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
     this.task$ = this.taskService.getTasks();
+    this.completedTask$ = this.taskService
+      .getTasks()
+      .pipe(map((items) => items.filter((item) => item.status === true)));
     this.form = this.formBuilder.group({
       title: ['', Validators.required],
       deadline: [null, Validators.required],
     });
+    this.completedTask$.subscribe((data) => console.log(data));
   }
   onSubmitForm(e: Event) {
     e.preventDefault();
@@ -85,7 +91,13 @@ export class AppComponent implements OnInit {
     this.taskService.updatedTaskStatus(data).subscribe(
       (res) => {
         console.log('Reponse, ' + res);
-        this.task$ = this.taskService.getTasks();
+        this.listAllTask
+          ? (this.task$ = this.taskService.getTasks())
+          : (this.completedTask$ = this.taskService
+              .getTasks()
+              .pipe(
+                map((items) => items.filter((item) => item.status === true))
+              ));
       },
       (err) => console.log('Erreur ' + err)
     );
@@ -102,5 +114,11 @@ export class AppComponent implements OnInit {
   isDateBeforeToday(date: Date) {
     const today = new Date();
     return new Date(date) < today;
+  }
+  viewAllTask() {
+    this.listAllTask = true;
+  }
+  viewCompletedTask() {
+    this.listAllTask = false;
   }
 }

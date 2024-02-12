@@ -1,54 +1,111 @@
 <div class="flex justify-center items-center min-h-screen">
-  <div class="bg-white shadow p-4 rounded-md w-1/2 text-center">
-    <h1 class="text-2xl font-bold mb-2">Todo App</h1>
-    <form
-      [formGroup]="form"
-      class="flex gap-4 mb-3"
-      (submit)="onSubmitForm($event)"
-    >
-      <input
-        type="text"
-        formControlName="title"
-        placeholder="Ajouter une tache"
-        class="flex-grow border bg-[#F8FAFC] border-gray-200 rounded-md outline-none p-2"
-      />
-      <input type="date" formControlName="deadline" />
-      <button
-        type="submit"
-        [disabled]="form.invalid"
-        class="bg-[#0E7490] px-4 text-white rounded-md"
+  <div class="bg-white shadow rounded-md w-1/2 text-center">
+    <div class="flex px-5 bg-gray-200 mb-5">
+      <p
+        class="grow flex justify-center p-2 cursor-pointer"
+        [ngClass]="{ 'bg-white': listAllTask }"
+        (click)="viewAllTask()"
       >
-        {{ editTask ? "Editer" : "Ajouter" }}
-      </button>
-    </form>
-    <div
-      class="flex justify-between items-center mb-2"
-      *ngFor="let task of task$ | async"
-    >
-      <div class="flex gap-2 items-center">
+        <img class="w-[20px]" src="../assets//list.svg" alt="" />
+      </p>
+      <p
+        class="grow flex justify-center cursor-pointer"
+        [ngClass]="{ 'bg-white': !listAllTask }"
+        (click)="viewCompletedTask()"
+      >
+        <img class="w-[20px]" src="../assets//completed.svg" alt="" />
+      </p>
+    </div>
+    <div class="px-5" *ngIf="listAllTask">
+      <form
+        [formGroup]="form"
+        class="flex gap-4 mb-3"
+        (submit)="onSubmitForm($event)"
+      >
         <input
-          type="checkbox"
-          name=""
-          [id]="task.id"
-          [checked]="task.status"
-          (change)="onChangeStatus({ id: task.id, status: task.status })"
+          type="text"
+          formControlName="title"
+          placeholder="Ajouter une tache"
+          class="flex-grow border bg-[#F8FAFC] border-gray-200 rounded-md outline-none p-2"
         />
-        <label
-          [for]="task.id"
-          [ngClass]="{
-            completed: task.status,
-            expired: isDateBeforeToday(task.deadline)
-          }"
-          >{{ task.title }}</label
-        >
-      </div>
-      <div class="flex gap-2">
+        <input type="date" formControlName="deadline" />
         <button
-          class="bg-green-700 p-1 text-white rounded"
-          (click)="editTaskTitle(task)"
+          type="submit"
+          [disabled]="form.invalid"
+          class="bg-[#0E7490] px-4 text-white rounded-md"
         >
-          Editer
+          {{ editTask ? "Editer" : "Ajouter" }}
         </button>
+      </form>
+      <div
+        class="flex justify-between items-center mb-2"
+        *ngFor="let task of task$ | async"
+      >
+        <div class="flex gap-2 items-center">
+          <input
+            type="checkbox"
+            name=""
+            [id]="task.id"
+            [checked]="task.status"
+            (change)="onChangeStatus({ id: task.id, status: task.status })"
+          />
+
+          <div class="flex gap-2 items-center">
+            <label
+              [for]="task.id"
+              [ngClass]="{
+                completed: task.status,
+                expired: isDateBeforeToday(task.deadline)
+              }"
+              >{{ task.title }}</label
+            >
+            <span class="text-sm text-gray-500">{{ task.deadline }}</span>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button
+            class="bg-green-700 p-1 text-white rounded"
+            (click)="editTaskTitle(task)"
+          >
+            Editer
+          </button>
+          <button
+            class="bg-red-700 p-1 text-white rounded"
+            (click)="onDeleteTask(task.id)"
+          >
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--Completed task-->
+    <div *ngIf="!listAllTask">
+      <div
+        class="flex justify-between items-center mb-2 px-5"
+        *ngFor="let task of completedTask$ | async"
+      >
+        <div class="flex gap-2 items-center">
+          <input
+            type="checkbox"
+            name=""
+            [id]="task.id"
+            [checked]="task.status"
+            (change)="onChangeStatus({ id: task.id, status: task.status })"
+          />
+
+          <div class="flex gap-2 items-center">
+            <label
+              [for]="task.id"
+              [ngClass]="{
+                completed: task.status,
+                expired: isDateBeforeToday(task.deadline)
+              }"
+              >{{ task.title }}</label
+            >
+            <span class="text-sm text-gray-500">{{ task.deadline }}</span>
+          </div>
+        </div>
+
         <button
           class="bg-red-700 p-1 text-white rounded"
           (click)="onDeleteTask(task.id)"
