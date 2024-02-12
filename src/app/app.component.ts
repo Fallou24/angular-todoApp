@@ -15,13 +15,13 @@ import {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  task$!: Observable<any>;
+  task$!: Observable<Task[]>;
   form!: FormGroup;
   statusValue!: boolean;
   editTask = false;
   taskId!: string;
   listAllTask = true;
-  completedTask$!: Observable<any>;
+  completedTask$!: Observable<Task[]>;
   constructor(
     private taskService: TaskService,
     private formBuilder: FormBuilder
